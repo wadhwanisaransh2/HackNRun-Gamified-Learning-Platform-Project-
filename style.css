@@ -210,7 +210,8 @@
         .hero {
             padding-top: calc(var(--header-height) + 2rem);
             padding-bottom: 6rem;
-            background: transparent;
+            /* background: transparent; */
+             background: rgba(0,0,0,0.2);
             color: var(--white);
             position: relative;
             overflow: hidden;
@@ -226,9 +227,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            /* background: 
                 radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%); */
         }
         
         .hero-content {
@@ -314,7 +315,7 @@
         /* Stats Section */
         .stats {
             padding: 6rem 2rem;
-            background: transparent;
+            background: rgba(0,0,0,0.2);
             color: var(--white);
             position: relative;
         }
@@ -375,6 +376,7 @@
             /* background-color: var(--card-bg); Use the new card-bg variable */
             position: relative;
             z-index: 1;
+           
         }
         
         .features::before {
@@ -407,6 +409,7 @@
             height: 6px;
             background: linear-gradient(to right, var(--accent), var(--secondary));
             border-radius: 6px;
+            
         }
         
         .features-grid {
@@ -480,7 +483,8 @@
        /* Features Section */
 .features {
   padding: 8rem 2rem;
-  background: transparent;
+  /* background: transparent; */
+   background: rgba(0,0,0,0.2);
   position: relative;
   text-align: center;
 }
@@ -566,120 +570,262 @@
 }
 
 /* Subjects Section *//* General Section Improvements */
-.subjects {
-    padding: 8rem 2rem;
-    background: transparent;
-    position: relative;
-    display: flex; /* Changed from grid to flex for better centering */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.2);
+ .subjects {
+
+ padding: 8rem 2rem;
+
+background: transparent;
+
+
+position: relative;
+
+ display: grid;
+
+ grid-template-columns: 1fr;
+
+ justify-items: center;
+
 }
+
+
+
+.subjects-heading h1 {
+
+font-size: 4.5rem; /* Increased font size for this heading */
+
+font-weight: bold;
+
+color: var(--white);
+
+margin-bottom: 4rem;
+
+}
+
+
+
+.subjects::before {
+
+content: '';
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+/* background: rgba(0,0,0,0.2); */
+
+}
+
+
 
 .subjects-container {
-    max-width: 100vw;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-    height: auto; /* Changed height from 76vh to auto */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+
+max-width: 90vw;
+
+margin: 0 auto;
+position: relative;
+
+z-index: 2;
+
+height: 76vh;
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
 }
+
+
 
 .subjects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-top: 4rem;
-    width: 100%;
-    max-width: 1600px;
+
+display: grid;
+
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+gap: 3rem;
+
+margin-top: 4rem;
+
+width: 100%;
+
+max-width: 1200px;
+
 }
 
-/* Updated Card Styles for better visibility */
+
+
 .subject-card {
-    font-size: 1.5rem;
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 2.5rem 1.5rem;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease;
-    border: 1px solid rgba(78, 50, 213, 0.2);
-    position: relative;
-    overflow: hidden;
-    /* Removed linear gradient from card, we'll add it to the button instead */
-    background-image: none;
-    background-size: 100% 100%;
-    transition: transform 0.5s ease, box-shadow 0.5s ease, border 0.5s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* This will push the button to the bottom */
+
+background: var(--card-bg);
+
+border-radius: 20px;
+
+padding: 2.5rem 1.5rem;
+
+text-align: center;
+
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+transition: all 0.4s ease;
+
+border: 1px solid rgba(78, 50, 213, 0.2);
+
+position: relative;
+
+overflow: hidden;
+
+background-image: linear-gradient(135deg, transparent 0%, transparent 50%, rgba(78, 50, 213, 0.1) 50%, rgba(78, 50, 213, 0.1) 100%);
+
+background-size: 200% 100%;
+
+transition: all 0.5s ease;
+
 }
 
-.subject-card:hover {
-    transform: translateY(-15px) scale(1.05);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--primary); /* Optional: add a colored border on hover */
+.subject-card:hover {transform: translateY(-15px) scale(1.05);box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);background-position: 100% 0;
+
 }
 
-.subject-icon {
-    font-size: 5.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-    transition: all 0.4s ease;
-    display: inline-block;
-    position: relative;
+
+
+.subject-icon {font-size: 4.5rem;margin-bottom: 1.5rem;color: var(--primary);transition: all 0.4s ease;display: inline-block;position: relative;
+
 }
 
-/* ... (the rest of the existing .subject-card, .subject-icon, h3, p styles are fine) ... */
 
-/* New CSS for the 'Explore Now' button */
-.explore-btn {
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    color: var(--white);
-    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    box-shadow: 0 4px 15px 0 rgba(100, 100, 255, 0.75);
+
+.subject-icon::after {
+
+content: '';
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+width: 100%;
+
+height: 100%;
+
+background-color: var(--primary);
+
+border-radius: 50%;
+
+opacity: 0;
+
+ transform: translate(-50%, -50%) scale(0);
+
+ transition: all 0.4s ease;
+
+ z-index: -1;
+
 }
 
-.explore-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px 0 rgba(100, 100, 255, 0.85);
+
+
+.subject-card:hover .subject-icon {
+
+ transform: scale(1.1);
+
+ color: var(--white);
+
 }
 
-/* Optional: Adding unique button colors for each card */
-.subjects-grid .subject-card:nth-child(1) .explore-btn {
-    background-image: linear-gradient(to right, #FF7B54, #FFB44F);
-    box-shadow: 0 4px 15px 0 rgba(255, 123, 84, 0.75);
+
+
+.subject-card:hover .subject-icon::after {
+
+ transform: translate(-50%, -50%) scale(1.2);
+
+ opacity: 0.25;
+
 }
 
-.subjects-grid .subject-card:nth-child(2) .explore-btn {
-    background-image: linear-gradient(to right, #4CAF50, #8BC34A);
-    box-shadow: 0 4px 15px 0 rgba(76, 175, 80, 0.75);
+
+
+.subject-card h3 {
+
+ font-size: 2rem;
+
+ margin-bottom: 1rem;
+
+ color: var(--dark);
+
+ transition: all 0.4s ease;
+
 }
 
-.subjects-grid .subject-card:nth-child(3) .explore-btn {
-    background-image: linear-gradient(to right, #42A5F5, #2979FF);
-    box-shadow: 0 4px 15px 0 rgba(66, 165, 245, 0.75);
+
+
+.subject-card:hover h3 {
+
+ color: var(--primary);
+
+ letter-spacing: 1.5px;
+
 }
 
-.subjects-grid .subject-card:nth-child(4) .explore-btn {
-    background-image: linear-gradient(to right, #8A2387, #E94057, #F27121);
-    box-shadow: 0 4px 15px 0 rgba(138, 35, 135, 0.75);
-}   /* Demo Section */
+
+
+.subject-card p {
+
+ line-height: 1.7;
+
+ font-size: 1.1rem;
+
+ color: var(--text);
+
+ transition: color 0.4s ease;
+
+}
+
+
+
+.subject-card:hover p {
+
+ color: var(--dark);
+
+}
+
+
+
+/* Live CSS Properties for Subject Icons (only STEM) */
+
+.subject-card:nth-child(1) .subject-icon { color: var(--math-color); }
+
+.subject-card:nth-child(2) .subject-icon { color: var(--physics-color); }
+
+.subject-card:nth-child(3) .subject-icon { color: var(--chemistry-color); }
+
+.subject-card:nth-child(4) .subject-icon { color: var(--biology-color); }
+
+.subject-card:nth-child(5) .subject-icon { color: var(--tech-color); }
+
+.subject-card:nth-child(6) .subject-icon { color: var(--stats-color); }
+
+
+
+.subject-card:nth-child(1):hover .subject-icon::after { background-color: var(--math-color); }
+
+.subject-card:nth-child(2):hover .subject-icon::after { background-color: var(--physics-color); }
+
+.subject-card:nth-child(3):hover .subject-icon::after { background-color: var(--chemistry-color); }
+
+.subject-card:nth-child(4):hover .subject-icon::after { background-color: var(--biology-color); }
+
+.subject-card:nth-child(5):hover .subject-icon::after { background-color: var(--tech-color); }
+
+.subject-card:nth-child(6):hover .subject-icon::after { background-color: var(--stats-color); } 
+/* Demo Section */
         .demo {
             padding: 8rem 2rem;
             background: transparent;
@@ -693,7 +839,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.2);
+            /* background: rgba(0,0,0,0.2); */
         }
         
         .demo-container {
@@ -748,10 +894,11 @@
         .testimonials {
             padding: 8rem 2rem;
             /* background: var(--card-bg); Use the new card-bg variable */
-                 background: linear-gradient(135deg, rgba(78, 50, 213, 0.95) 0%, rgba(27, 0, 106, 0.95) 100%);
+                 /* background: linear-gradient(135deg, rgba(78, 50, 213, 0.95) 0%, rgba(27, 0, 106, 0.95) 100%); */
                     background: transparent    ;
             position: relative;
             z-index: 1;
+             background: rgba(0,0,0,0.2);
         }
         
         .testimonials-container {
@@ -812,7 +959,8 @@
         
         /* Footer */
         footer {
-            background: transparent;
+            /* background: transparent; */
+             background: rgba(0,0,0,0.2);
             color: var(--white);
             padding: 6rem 2rem 3rem;
             position: relative;
@@ -826,6 +974,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, var(--tertiary) 0%, var(--dark) 100%);
+             background: rgba(0,0,0,0.2);
             opacity: 0.95;
             z-index: 0;
         }
@@ -1157,7 +1306,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0);
+  /* background: rgba(0,0,0,0); */
 }
 
 .charts-container {
@@ -1299,7 +1448,7 @@
     position: relative;
     z-index: 1;
     text-align: center;
-     background: rgba(0,0,0,0.2);
+     background: rgba(0,0,0,0);
 }
 
 .classes-container {
@@ -1321,7 +1470,7 @@
 
 .class-card {
     /* background: rgba(255, 255, 255, 0.15); Light, transparent card background */
-   background: rgba(0,0,0,0.2);
+   background: rgba(0,0,0,0.3);
     border-radius: 25px;
     padding: 2.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
