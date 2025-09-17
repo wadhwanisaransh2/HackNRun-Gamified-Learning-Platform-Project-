@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - HackNRun</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. SETUP & GLOBALS
+           ========================================================================== */
+        :root {
+            /* Color Scheme */
+            --primary: #4e32d5;         /* Deep Violet */
+            --primary-light: #7259f9;    /* Lavender */
+            --accent: #ff478c;          /* Hot Pink */
+            --secondary: #00bcd4;       /* Vibrant Teal */
+            --tertiary: #1b006a;        /* Darkest Violet */
+            --white: #ffffff;
+            --dark: #1f014b;            /* Dark text for contrast */
+            --text: #3c126d;            /* Lighter dark text */
+
+            /* Sizing */
+            --header-height: 90px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Original Surfer", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Original Surfer", sans-serif;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--tertiary) 0%, var(--primary) 100%);
+        }
+
+        /* ==========================================================================
+           2. HEADER & NAVIGATION (UPDATED)
+           ========================================================================== */
+        header {
+            background-color: var(--primary); /* Updated to solid color */
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* UPDATED: Logo styles for new design */
+        .logo {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        
+        .logo span {
+            color: var(--accent-light);
+            margin-left: 4px;
+        }
+        
+        .logo-icon {
+            font-size: 2.8rem;
+            margin-right: 12px;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled .logo-icon {
+            color: var(--primary);
+        }
+
+        /* UPDATED: Navigation links for cleaner look */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Gap for icons if they are re-added */
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+
+        /* ==========================================================================
+           PROFILE PAGE STYLES
+           ========================================================================== */
+        .profile-page {
+            padding-top: calc(var(--header-height) + 4rem);
+            padding-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .add-link {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .add-link:hover, .add-link-inline:hover {
+            color: var(--accent);
+        }
+
+        .placeholder-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .profile-sidebar .user-info {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-light);
+            margin: 0 auto 1rem;
+            object-fit: cover;
+        }
+
+        .user-info h2 {
+            color: var(--white);
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-info .username {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .add-link-inline {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .profile-main .profile-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+        }
+
+        .progress-content h4 {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .progress-circle span { font-size: 1rem; font-weight: 700; color: var(--white); }
+        .progress-circle svg { position: absolute; top: 0; left: 0; }
+        .progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.2); stroke-width: 8; }
+        .progress-bar {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 163.3;
+            stroke-dashoffset: 163.3;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 968px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-sidebar {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                    <i class="fas fa-graduation-cap logo-icon"></i>
+                    <h1>Hack<span>NRun</span></h1>
+            </div>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="./leaderBoard.html" class="active">Leaderboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="profile-page">
+        <div class="profile-container">
+            <div class="profile-grid">
+                
+                <aside class="profile-sidebar">
+                    <div class="profile-card user-info">
+                        <img src="" alt="User Avatar" class="profile-avatar">
+                        <h2>HackNRun</h2>
+                        <p class="username">@hacknrun</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><i class="ri-user-line"></i> Personal Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-item">
+                                <i class="ri-mail-line"></i>
+                                <span>HackNRun@gmail.com</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="ri-phone-line"></i>
+                                <a href="#" class="add-link-inline">+ Add your mobile number</a>
+                            </div>
+                            <div class="info-item">
+                                <i class="ri-map-pin-line"></i>
+                                <span>India</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="profile-main">
+                    <div class="profile-card progress-card">
+                        <div class="progress-content">
+                            <h4>Complete your profile</h4>
+                            <p>This data will be helpful to tailor your job applications.</p>
+                        </div>
+                        <div class="progress-circle">
+                            <svg width="60" height="60" viewBox="0 0 60 60">
+                                <circle class="progress-bg" cx="30" cy="30" r="26"></circle>
+                                <circle class="progress-bar" cx="30" cy="30" r="26"></circle>
+                            </svg>
+                            <span>0%</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-award-line"></i> My Badges</h3> <a href="#" class="add-link">Get Badges</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">You have not unlocked any badges yet.</p> </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-article-line"></i> My Certifications</h3> <a href="#" class="add-link">Get Certified</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">You have not earned any certificates yet.</p> </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-briefcase-4-line"></i> Work Experience</h3> <a href="#" class="add-link">+ Add Work Experience</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">Add your work experience. Don't forget to add those internships as well.</p> </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-graduation-cap-line"></i> Education</h3> <a href="#" class="add-link">+ Add Education</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">We believe in skills over pedigree, but go ahead add your education for the recruiters who don't.</p> </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-link"></i> Links</h3> <a href="#" class="add-link">+ Add Links</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">Add all the relevant links that help in knowing you as a hacker.</p> </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-header"> <h3><i class="ri-tools-line"></i> My Skills</h3> <a href="#" class="add-link">+ Add Skills</a> </div>
+                        <div class="card-body"> <p class="placeholder-text">Add all the relevant skills that speak on your behalf.</p> </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": false }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out" } },
+                "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } } },
+                "retina_detect": true
+            });
+        }
+    </script>
+</body>
+</html>

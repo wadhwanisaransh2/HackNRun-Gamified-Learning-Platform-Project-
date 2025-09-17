@@ -107,6 +107,7 @@
         
         .logo {
             display: flex;
+            justify-content: flex-start;
             align-items: center;
         }
         
@@ -116,6 +117,7 @@
             font-weight: 900;
             letter-spacing: 1px;
             display: flex;
+            justify-content: flex-start;
             align-items: center;
             transition: color 0.3s ease;
         }
@@ -579,7 +581,7 @@
 .features {
     padding: 8rem 2rem;
     /* background: #0d0124; A solid, dark background for high contrast */
- background-color:rgba(0,0,0,0.2)
+    background-color:rgba(0,0,0,0.2);
     position: relative;
     text-align: center;
     z-index: 1;
