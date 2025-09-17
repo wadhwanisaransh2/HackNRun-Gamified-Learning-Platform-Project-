@@ -1,0 +1,395 @@
+A<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stars MCQ Adventure - Jump Animation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        .game-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,1);
+            max-width: 1000px;
+            margin: 20px auto;
+            position: relative;
+        }
+        .lives-counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .star-icon {
+            color: #f39c12;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        .question-section {
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn.selected {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            transform: scale(1.05);
+        }
+        .message-area {
+            min-height: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .success-msg { color: #a8e6cf; }
+        .error-msg { color: #ffd1dc; }
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .submit-btn {
+            background: #1abc9c;
+            color: #fff;
+        }
+        .next-btn {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .restart-btn {
+            background: #f39c12;
+            color: #fff;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .hidden { display: none; }
+        @media (max-width: 768px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .game-container { padding: 20px; margin: 10px; }
+            .question-text { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="game-container fade-in">
+            <h1 class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Stars MCQ Adventure</h1>
+            <p class="text-center text-lg mb-6">Climb to the stars by answering questions right! Wrong answers cost a life. Reach the top with your 3 lives intact!</p>
+            <div class="lives-counter">
+                <span class="text-lg font-semibold">Lives Remaining:</span>
+                <span id="starCount" class="flex gap-2">★ ★ ★</span>
+            </div>
+            <canvas id="gameCanvas" class="game-canvas mx-auto" width="500" height="300" style="border: 20px solid beige;"></canvas>
+            <div class="question-section">
+                <div class="question-text" id="questionDisplay">What wonders await in the stars? Answer to climb!</div>
+                <div class="options-grid" id="optionsContainer"></div>
+            </div>
+            <div class="message-area text-center" id="messageDisplay"></div>
+            <div class="control-buttons">
+                <button class="option-btn submit-btn" id="submitBtn">Submit Answer</button>
+                <button class="option-btn next-btn hidden" id="nextBtn">Next Star</button>
+                <button class="option-btn restart-btn hidden" id="restartBtn">Restart Journey</button>
+            </div>
+            <div class="stats hidden" id="statsDisplay">
+                <div class="stat-item">
+                    <div class="stat-icon">🏔</div>
+                    <div>Stairs Climbed: <span id="stairsCount">0</span></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🎯</div>
+                    <div>Accuracy: <span id="accuracy">0%</span></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">⏱</div>
+                    <div>Time Taken: <span id="timeTaken">00:00</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const starCount = document.getElementById('starCount');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const submitBtn = document.getElementById('submitBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const statsDisplay = document.getElementById('statsDisplay');
+        const stairsCount = document.getElementById('stairsCount');
+        const accuracy = document.getElementById('accuracy');
+        const timeTaken = document.getElementById('timeTaken');
+        let lives = 3;
+        let currentStair = 0;
+        const maxStairs = 10;
+        let currentQuestion = null;
+        let selectedOption = null;
+        let gameStartTime = Date.now();
+        let totalQuestionsAnswered = 0;
+        let correctAnswers = 0;
+        let questionStartTime;
+        // Animation variables
+        let isJumping = false;
+        let jumpStart = null;
+        let jumpDuration = 400; // ms
+        let jumpFrom = 0;
+        let jumpTo = 0;
+
+        const playerImg = new Image();
+        playerImg.src = 'https://www.pikpng.com/pngl/b/79-790899_8-bit-mario-8-bit-mario-png-clipart.png';
+
+        playerImg.onload = () => { drawStairs(); };
+
+        const questions = [
+            { q: "What celestial body is known as the 'Red Planet'?", options: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
+            { q: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], a: 1 },
+            { q: "What phenomenon creates the Aurora Borealis?", options: ["Sun", "Moon", "Stars", "Solar particles"], a: 3 },
+            { q: "What is the largest moon in the solar system?", options: ["Europa", "Ganymede", "Titan", "Io"], a: 1 },
+            { q: "How long does it take for Jupiter to orbit the Sun?", options: ["1 year", "12 years", "165 years", "248 years"], a: 1 },
+            { q: "What star is closest to Earth after the Sun?", options: ["Sirius", "Proxima Centauri", "Betelgeuse", "Vega"], a: 1 },
+            { q: "What type of galaxy is the Milky Way?", options: ["Spiral", "Elliptical", "Irregular", "Lenticular"], a: 0 },
+            { q: "How many times larger is the Sun compared to Earth?", options: ["100x", "1,000x", "100,000x", "1 million x"], a: 1 },
+            { q: "What element comprises the majority of stars?", options: ["Hydrogen", "Helium", "Nitrogen", "Oxygen"], a: 0 },
+            { q: "What is a black hole?", options: ["Dead star", "Dense matter", "Time vortex", "Space vacuum"], a: 1 },
+            { q: "Which planet has the most moons?", options: ["Jupiter", "Saturn", "Uranus", "Neptune"], a: 1 },
+            { q: "What causes a shooting star?", options: ["Comet","Asteroid", "Meteorite", "Satellite"], a: 2 },
+            { q: "How old is the Milky Way galaxy?", options: ["13.6 billion yrs", "4.54 billion yrs", "13.8 billion yrs", "10 billion yrs"], a: 0 },
+            { q: "What does NASA stand for?", options: ["National Aeronautics and Space Administration", "North American Space Agency", "National Astronomical Society of America", "New Astronomical Studies Association"], a: 0 },
+            { q: "What powers the Sun's energy?", options: ["Nuclear fission", "Chemical reaction", "Gravitational pull", "Nuclear fusion"], a: 3 }
+        ];
+
+        function drawStairs(jumpOffsetY = 0, stairNumOverride = null) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, '#0c0c0c');
+    gradient.addColorStop(1, '#1a1a2e');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const stairWidth = 80;
+    const stairSpacing = 15;
+    const totalWidth = stairWidth + (maxStairs - 1) * stairSpacing;
+    const startX = (canvas.width - totalWidth) / 2;
+    for (let i = 0; i < maxStairs; i++) {
+        const y = canvas.height - (i * 18) - 50;
+        const x = startX + i * stairSpacing;
+        ctx.fillStyle = i < currentStair ? (i % 2 === 0 ? '#f39c12' : '#e74c3c') : '#34495e';
+        ctx.shadowBlur = i < currentStair ? 10 : 0;
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.fillRect(x, y, stairWidth, 15);
+        ctx.strokeStyle = '#ecf0f1';
+        ctx.strokeRect(x, y, stairWidth, 15);
+        ctx.shadowBlur = 0;
+    }
+    let stairNum = stairNumOverride !== null ? stairNumOverride : currentStair;
+    let playerX = startX + stairNum * stairSpacing + stairWidth / 2;
+    let playerY = canvas.height - stairNum * 18 - 70 - jumpOffsetY;
+    ctx.drawImage(playerImg, playerX - 12, playerY - 12, 24, 24);
+}
+        function triggerJump() {
+            isJumping = true;
+            jumpStart = null;
+            jumpFrom = currentStair - 1;
+            jumpTo = currentStair;
+
+            function animateJump(ts) {
+                if (!jumpStart) jumpStart = ts;
+                let progress = (ts - jumpStart) / jumpDuration;
+                if (progress > 1) progress = 1;
+                // Arc motion
+                let arcY = Math.sin(Math.PI * progress) * 28; // vertical
+                let stairProgress = jumpFrom + (jumpTo - jumpFrom) * progress;
+                drawStairs(arcY, stairProgress);
+                if (progress < 1) {
+                    requestAnimationFrame(animateJump);
+                } else {
+                    isJumping = false;
+                    drawStairs();
+                }
+            }
+            requestAnimationFrame(animateJump);
+        }
+
+        function updateLivesDisplay() {
+            starCount.innerHTML = '';
+            for (let i = 0; i < lives; i++) {
+                starCount.innerHTML += '<span class="star-icon animate-pulse">🌟</span>';
+            }
+            for (let i = lives; i < 3; i++) {
+                starCount.innerHTML += '<span style="color: #7f8c8d; opacity: 0.3;">☆</span>';
+            }
+        }
+
+        function getRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const selected = questions[randomIndex];
+            questions.splice(randomIndex, 1);
+            if (questions.length === 0) refillQuestions();
+            return selected;
+        }
+
+        function refillQuestions() {
+            questions.push(
+                { q: "What is the speed of light?", options: ["299,792 km/s", "300,000 km/s", "150,000 km/s", "200,000 km/s"], a: 0 },
+                { q: "How many moons does Mars have?", options: ["1", "2", "3", "4"], a: 1 }
+            );
+        }
+
+        function askQuestion() {
+            currentQuestion = getRandomQuestion();
+            questionDisplay.textContent = currentQuestion.q;
+            optionsContainer.innerHTML = '';
+            selectedOption = null;
+            messageDisplay.textContent = '';
+            messageDisplay.className = 'message-area text-center';
+            nextBtn.classList.add('hidden');
+            restartBtn.classList.add('hidden');
+            submitBtn.disabled = false;
+            questionStartTime = Date.now();
+            currentQuestion.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<span class="font-bold mr-2">${String.fromCharCode(65 + index)})</span>${option}`;
+                btn.className = 'option-btn';
+                btn.addEventListener('click', () => selectOption(index, btn));
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(index, button) {
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            selectedOption = index;
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) {
+                messageDisplay.textContent = "Select an option before submitting!";
+                messageDisplay.classList.add('error-msg');
+                return;
+            }
+            totalQuestionsAnswered++;
+            const isCorrect = selectedOption === currentQuestion.a;
+            if (isCorrect) {
+                currentStair++;
+                correctAnswers++;
+                messageDisplay.textContent = "Correct! You've claimed this star step. Keep climbing!";
+                messageDisplay.classList.add('success-msg');
+                if (currentStair >= maxStairs) {
+                    messageDisplay.textContent = "Congratulations, Star Climber! You've reached the cosmos!";
+                    endGame(true);
+                    return;
+                }
+                // Jump animation on correct answer
+                if (!isJumping) triggerJump();
+            } else {
+                lives--;
+                const correctAnswer = String.fromCharCode(65 + currentQuestion.a);
+                messageDisplay.textContent = `A stellar misstep! The correct answer was ${correctAnswer}. One star fades away.`;
+                messageDisplay.classList.add('error-msg');
+                if (lives <= 0) {
+                    messageDisplay.textContent = "All stars have fallen! Your cosmic journey ends here.";
+                    endGame(false);
+                    return;
+                }
+                drawStairs();
+            }
+            updateLivesDisplay();
+            submitBtn.disabled = true;
+            nextBtn.classList.remove('hidden');
+        }
+
+        function endGame(win) {
+            const totalTime = Math.floor((Date.now() - gameStartTime) / 1000); // seconds
+            const minutes = Math.floor(totalTime / 60);
+            const seconds = totalTime % 60;
+            timeTaken.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            stairsCount.textContent = currentStair;
+            const acc = totalQuestionsAnswered > 0 ? Math.round((correctAnswers / totalQuestionsAnswered) * 100) : 0;
+            accuracy.textContent = `${acc}%`;
+            statsDisplay.classList.remove('hidden');
+            setTimeout(() => {
+                restartBtn.classList.remove('hidden');
+            }, 2000);
+        }
+
+        function resetGame() {
+            lives = 3;
+            currentStair = 0;
+            totalQuestionsAnswered = 0;
+            correctAnswers = 0;
+            gameStartTime = Date.now();
+            updateLivesDisplay();
+            drawStairs();
+            refillQuestions();
+            statsDisplay.classList.add('hidden');
+            askQuestion();
+            submitBtn.disabled = false;
+            messageDisplay.textContent = "Your new adventure begins! May the stars guide you.";
+        }
+
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', askQuestion);
+        restartBtn.addEventListener('click', resetGame);
+
+        updateLivesDisplay();
+        askQuestion();
+    </script>
+</body>
+</html>
