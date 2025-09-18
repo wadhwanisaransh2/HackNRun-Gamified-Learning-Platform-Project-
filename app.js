@@ -215,3 +215,37 @@ function redirectToPage(page) {
     // Since these are not real pages, we'll just show an alert.
     alert(`Redirecting to the ${page.replace('.html', '').toUpperCase()} page!\n\nThis is where the detailed course content would be loaded.`);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Dark Mode Toggle Functionality
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('darkMode');
+        if (savedTheme === 'enabled') {
+            body.classList.add('dark-mode');
+            if(darkModeToggle) darkModeToggle.checked = true;
+        } else {
+            body.classList.remove('dark-mode');
+            if(darkModeToggle) darkModeToggle.checked = false;
+        }
+    };
+
+    applyTheme();
+
+    if(darkModeToggle) {
+        darkModeToggle.addEventListener('change', () => {
+            if (darkModeToggle.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+    }
+
+    // --- Other existing JS code from your app.js file should go here ---
+});

@@ -1,70 +1,92 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HackNRun - Gamified Learning for Rural Education</title>
-        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackNRun - Gamified Learning for Rural Education</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Original+Surfer&family=Updock&display=swap" rel="stylesheet">
 
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-        
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-        
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        
-        <div id="particles-js"></div>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="particles-js"></div>
 
-        <header>
-            <div class="header-container">
-                <div class="logo">
-                    <a href="./profile.html">
-                        <i class="fas fa-graduation-cap logo-icon"></i>
-                        <h1>Hack<span>NRun</span></h1>
-                    </a>
-                </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <nav id="main-nav">
-                    <ul>
-                        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#classes"><i class="fas fa-school"></i> Classes</a></li>
-                        <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
-                        <li><a href="#subjects"><i class="fas fa-book"></i> Subjects</a></li>
-                        <li><a href="#demo"><i class="fas fa-play-circle"></i> Demo</a></li>
-                        <li><a href="#testimonials"><i class="fas fa-chart-pie"></i>Testimonials</a></li>
-                        <li><a href="#contact" class="nav-cta"><i class="fas fa-envelope"></i> Contact</a></li>
-                    </ul>
-                </nav>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="./profile.html">
+                    <i class="fas fa-graduation-cap logo-icon"></i>
+                    <h1>Hack<span>NRun</span></h1>
+                </a>
             </div>
-        </header>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#classes"><i class="fas fa-school"></i> Classes</a></li>
+                    <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+                    <li><a href="#subjects"><i class="fas fa-book"></i> Subjects</a></li>
+                    <li><a href="#demo"><i class="fas fa-play-circle"></i> Demo</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-chart-pie"></i>Testimonials</a></li>
+                    <li><a href="#contact" class="nav-cta"><i class="fas fa-envelope"></i> Contact</a></li>
+                    
+                    <li class="profile-dropdown">
+                        <button class="profile-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Open user menu">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <ul>
+                                <li><a href="./profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                                <li><a href="#"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                                <li class="dark-mode-toggle-container">
+                                    <i class="fas fa-moon"></i>
+                                    <span class="dark-mode-text">Dark Mode</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="darkModeToggle">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </li>
+                                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    </ul>
+            </nav>
+        </div>
+    </header>
 
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <h2 data-aos="fade-up" data-aos-duration="1000">Transform Learning Into an Adventure!</h2>
-                <div class="hero-typed" id="typed-text"></div>
-            <a style="text-decoration: none;" href="#classes">
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2 data-aos="fade-up" data-aos-duration="1000">Transform Learning Into an Adventure!</h2>
+            <div class="hero-typed" id="typed-text"></div>
+        <a style="text-decoration: none;" href="#classes">
     <button onclick="document.getElementById('classes').scrollIntoView({behavior: 'smooth'})" class="cta-button" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
         <i class="fas fa-rocket"></i> Start Your Journey
     </button>
 </a></div>
-        </section>
-            
+    </section>
+        
     <section class="stats" id="stats">
         <div class="stats-container">
             <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
@@ -140,7 +162,7 @@
     </section>
 
 
-     <section class="features" id="features">
+    <section class="features" id="features">
         <div class="features-container">
             <h2 class="section-title" data-aos="fade-up">Powerful Features</h2>
             <div class="features-grid">
@@ -355,5 +377,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script src="app.js"></script>
-    </body>
-    </html>
+</body>
+</html>
