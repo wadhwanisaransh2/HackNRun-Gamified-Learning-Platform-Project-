@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stars MCQ Adventure - Jump Animation</title>
+    <title>Reproduction MCQ Adventure - Jump Animation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -130,19 +130,19 @@
 <body>
     <div class="container mx-auto px-4 py-8">
         <div class="game-container fade-in">
-            <h1 class="text-3xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Stars MCQ Adventure</h1> <p class="text-center text-md mb-6">Climb to the stars by answering questions right! Wrong answers cost a life. Reach the top with your 3 lives intact!</p> <div class="lives-counter">
+            <h1 class="text-3xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Reproduction MCQ Adventure</h1> <p class="text-center text-md mb-6">Climb to the top by answering questions correctly! Wrong answers cost a life. Reach the top with your 3 lives intact!</p> <div class="lives-counter">
                 <span class="text-lg font-semibold">Lives Remaining:</span>
                 <span id="starCount" class="flex gap-2">★ ★ ★</span>
             </div>
             <canvas id="gameCanvas" class="game-canvas mx-auto" width="450" height="270" style="border: 18px solid beige;"></canvas>
             <div class="question-section">
-                <div class="question-text" id="questionDisplay">What wonders await in the stars? Answer to climb!</div>
+                <div class="question-text" id="questionDisplay">Test your knowledge to begin!</div>
                 <div class="options-grid" id="optionsContainer"></div>
             </div>
             <div class="message-area text-center" id="messageDisplay"></div>
             <div class="control-buttons">
                 <button class="option-btn submit-btn" id="submitBtn">Submit Answer</button>
-                <button class="option-btn next-btn hidden" id="nextBtn">Next Star</button>
+                <button class="option-btn next-btn hidden" id="nextBtn">Next Level</button>
                 <button class="option-btn restart-btn hidden" id="restartBtn">Restart Journey</button>
             </div>
             <div class="stats hidden" id="statsDisplay">
@@ -196,22 +196,23 @@
 
         playerImg.onload = () => { drawStairs(); };
 
-        const questions = [
-            { q: "What celestial body is known as the 'Red Planet'?", options: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
-            { q: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], a: 1 },
-            { q: "What phenomenon creates the Aurora Borealis?", options: ["Sun", "Moon", "Stars", "Solar particles"], a: 3 },
-            { q: "What is the largest moon in the solar system?", options: ["Europa", "Ganymede", "Titan", "Io"], a: 1 },
-            { q: "How long does it take for Jupiter to orbit the Sun?", options: ["1 year", "12 years", "165 years", "248 years"], a: 1 },
-            { q: "What star is closest to Earth after the Sun?", options: ["Sirius", "Proxima Centauri", "Betelgeuse", "Vega"], a: 1 },
-            { q: "What type of galaxy is the Milky Way?", options: ["Spiral", "Elliptical", "Irregular", "Lenticular"], a: 0 },
-            { q: "How many times larger is the Sun compared to Earth?", options: ["100x", "1,000x", "100,000x", "1 million x"], a: 1 },
-            { q: "What element comprises the majority of stars?", options: ["Hydrogen", "Helium", "Nitrogen", "Oxygen"], a: 0 },
-            { q: "What is a black hole?", options: ["Dead star", "Dense matter", "Time vortex", "Space vacuum"], a: 1 },
-            { q: "Which planet has the most moons?", options: ["Jupiter", "Saturn", "Uranus", "Neptune"], a: 1 },
-            { q: "What causes a shooting star?", options: ["Comet","Asteroid", "Meteorite", "Satellite"], a: 2 },
-            { q: "How old is the Milky Way galaxy?", options: ["13.6 billion yrs", "4.54 billion yrs", "13.8 billion yrs", "10 billion yrs"], a: 0 },
-            { q: "What does NASA stand for?", options: ["National Aeronautics and Space Administration", "North American Space Agency", "National Astronomical Society of America", "New Astronomical Studies Association"], a: 0 },
-            { q: "What powers the Sun's energy?", options: ["Nuclear fission", "Chemical reaction", "Gravitational pull", "Nuclear fusion"], a: 3 }
+        // MODIFIED: Questions are now based on Class 10 Reproduction
+        let questions = [
+            { q: "The fusion of male and female gametes is called:", options: ["Pollination", "Fertilization", "Implantation", "Gestation"], a: 1 },
+            { q: "Which of the following is a part of the male reproductive system in humans?", options: ["Ovary", "Uterus", "Vas deferens", "Fallopian tube"], a: 2 },
+            { q: "Budding is a common mode of asexual reproduction in:", options: ["Amoeba", "Yeast and Hydra", "Planaria", "Spirogyra"], a: 1 },
+            { q: "The transfer of pollen from the anther to the stigma is known as:", options: ["Germination", "Pollination", "Fertilization", "Adhesion"], a: 1 },
+            { q: "In human females, where does fertilization typically occur?", options: ["Uterus", "Cervix", "Ovary", "Fallopian tube (Oviduct)"], a: 3 },
+            { q: "Which of the following is a sexually transmitted disease (STD) caused by a virus?", options: ["Syphilis", "Gonorrhoea", "AIDS", "Cholera"], a: 2 },
+            { q: "The part of the flower that develops into a fruit after fertilization is the:", options: ["Ovary", "Petal", "Sepal", "Stigma"], a: 0 },
+            { q: "A unisexual flower contains:", options: ["Both stamen and pistil", "Only stamen or only pistil", "Only stamen and petals", "Only pistil and sepals"], a: 1 },
+            { q: "The process of shedding the uterine lining, blood, and unfertilized egg is called:", options: ["Ovulation", "Menstruation", "Gestation", "Fertilization"], a: 1 },
+            { q: "Vegetative propagation refers to the formation of new plants from:", options: ["Seeds", "Spores", "Stem, roots, and leaves", "Gametes"], a: 2 },
+            { q: "The anther of a stamen contains:", options: ["Ovules", "Pollen grains", "Sepals", "Nectar"], a: 1 },
+            { q: "Which method of contraception provides protection from acquiring STDs?", options: ["Copper-T", "Oral pills", "Condoms", "Surgical methods"], a: 2 },
+            { q: "The embryo in humans gets nutrition from the mother's blood via the:", options: ["Placenta", "Fallopian tube", "Cervix", "Uterus wall"], a: 0 },
+            { q: "Planaria reproduces asexually through a process called:", options: ["Budding", "Spore formation", "Fission", "Regeneration"], a: 3 },
+            { q: "The site of implantation for the zygote in the human female is the:", options: ["Ovary", "Vagina", "Uterus", "Fallopian tube"], a: 2 }
         ];
 
         // MODIFIED: All drawing logic values reduced by ~10%
@@ -283,17 +284,18 @@
         }
 
         function getRandomQuestion() {
+            if (questions.length === 0) refillQuestions();
             const randomIndex = Math.floor(Math.random() * questions.length);
             const selected = questions[randomIndex];
             questions.splice(randomIndex, 1);
-            if (questions.length === 0) refillQuestions();
             return selected;
         }
 
+        // MODIFIED: Refill questions are also on the topic of Reproduction
         function refillQuestions() {
             questions.push(
-                { q: "What is the speed of light?", options: ["299,792 km/s", "300,000 km/s", "150,000 km/s", "200,000 km/s"], a: 0 },
-                { q: "How many moons does Mars have?", options: ["1", "2", "3", "4"], a: 1 }
+                { q: "A feature of reproduction common to Amoeba, Spirogyra, and Yeast is that:", options: ["They are all multicellular", "They all reproduce only sexually", "They all reproduce asexually", "They are all plants"], a: 2 },
+                { q: "The part of the seed which grows and develops into the root system is called the:", options: ["Plumule", "Cotyledon", "Radicle", "Endosperm"], a: 2 }
             );
         }
 
@@ -334,10 +336,10 @@
             if (isCorrect) {
                 currentStair++;
                 correctAnswers++;
-                messageDisplay.textContent = "Correct! You've claimed this star step. Keep climbing!";
+                messageDisplay.textContent = "Correct! You've climbed one step closer. Keep going!";
                 messageDisplay.classList.add('success-msg');
                 if (currentStair >= maxStairs) {
-                    messageDisplay.textContent = "Congratulations, Star Climber! You've reached the cosmos!";
+                    messageDisplay.textContent = "Congratulations! You've successfully reached the top!";
                     endGame(true);
                     return;
                 }
@@ -345,11 +347,11 @@
                 if (!isJumping) triggerJump();
             } else {
                 lives--;
-                const correctAnswer = String.fromCharCode(65 + currentQuestion.a);
-                messageDisplay.textContent = `A stellar misstep! The correct answer was ${correctAnswer}. One star fades away.`;
+                const correctAnswerText = currentQuestion.options[currentQuestion.a];
+                messageDisplay.textContent = `Incorrect! The right answer was '${correctAnswerText}'. One life lost.`;
                 messageDisplay.classList.add('error-msg');
                 if (lives <= 0) {
-                    messageDisplay.textContent = "All stars have fallen! Your cosmic journey ends here.";
+                    messageDisplay.textContent = "Game Over! You have run out of lives.";
                     endGame(false);
                     return;
                 }
@@ -369,6 +371,8 @@
             const acc = totalQuestionsAnswered > 0 ? Math.round((correctAnswers / totalQuestionsAnswered) * 100) : 0;
             accuracy.textContent = `${acc}%`;
             statsDisplay.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden');
             setTimeout(() => {
                 restartBtn.classList.remove('hidden');
             }, 2000);
@@ -382,11 +386,29 @@
             gameStartTime = Date.now();
             updateLivesDisplay();
             drawStairs();
-            refillQuestions();
+            // This ensures the original question set is restored for a new game
+            questions = [
+                { q: "The fusion of male and female gametes is called:", options: ["Pollination", "Fertilization", "Implantation", "Gestation"], a: 1 },
+                { q: "Which of the following is a part of the male reproductive system in humans?", options: ["Ovary", "Uterus", "Vas deferens", "Fallopian tube"], a: 2 },
+                { q: "Budding is a common mode of asexual reproduction in:", options: ["Amoeba", "Yeast and Hydra", "Planaria", "Spirogyra"], a: 1 },
+                { q: "The transfer of pollen from the anther to the stigma is known as:", options: ["Germination", "Pollination", "Fertilization", "Adhesion"], a: 1 },
+                { q: "In human females, where does fertilization typically occur?", options: ["Uterus", "Cervix", "Ovary", "Fallopian tube (Oviduct)"], a: 3 },
+                { q: "Which of the following is a sexually transmitted disease (STD) caused by a virus?", options: ["Syphilis", "Gonorrhoea", "AIDS", "Cholera"], a: 2 },
+                { q: "The part of the flower that develops into a fruit after fertilization is the:", options: ["Ovary", "Petal", "Sepal", "Stigma"], a: 0 },
+                { q: "A unisexual flower contains:", options: ["Both stamen and pistil", "Only stamen or only pistil", "Only stamen and petals", "Only pistil and sepals"], a: 1 },
+                { q: "The process of shedding the uterine lining, blood, and unfertilized egg is called:", options: ["Ovulation", "Menstruation", "Gestation", "Fertilization"], a: 1 },
+                { q: "Vegetative propagation refers to the formation of new plants from:", options: ["Seeds", "Spores", "Stem, roots, and leaves", "Gametes"], a: 2 },
+                { q: "The anther of a stamen contains:", options: ["Ovules", "Pollen grains", "Sepals", "Nectar"], a: 1 },
+                { q: "Which method of contraception provides protection from acquiring STDs?", options: ["Copper-T", "Oral pills", "Condoms", "Surgical methods"], a: 2 },
+                { q: "The embryo in humans gets nutrition from the mother's blood via the:", options: ["Placenta", "Fallopian tube", "Cervix", "Uterus wall"], a: 0 },
+                { q: "Planaria reproduces asexually through a process called:", options: ["Budding", "Spore formation", "Fission", "Regeneration"], a: 3 },
+                { q: "The site of implantation for the zygote in the human female is the:", options: ["Ovary", "Vagina", "Uterus", "Fallopian tube"], a: 2 }
+            ];
             statsDisplay.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
             askQuestion();
             submitBtn.disabled = false;
-            messageDisplay.textContent = "Your new adventure begins! May the stars guide you.";
+            messageDisplay.textContent = "Your new adventure begins! Good luck.";
         }
 
         submitBtn.addEventListener('click', checkAnswer);
