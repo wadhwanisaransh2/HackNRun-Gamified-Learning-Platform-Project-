@@ -7,36 +7,44 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Original+Surfer&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
         /* ==========================================================================
            1. SETUP & GLOBALS
            ========================================================================== */
         :root {
             /* Color Scheme */
-            --primary: #4e32d5;         /* Deep Violet */
-            --primary-light: #7259f9;    /* Lavender */
-            --accent: #ff478c;          /* Hot Pink */
-            --secondary: #00bcd4;       /* Vibrant Teal */
-            --tertiary: #1b006a;        /* Darkest Violet */
+            --primary: #4e32d5;       /* Deep Violet */
+            --primary-light: #7259f9;   /* Lavender */
+            --accent: #ff478c;       /* Hot Pink */
+            --secondary: #00bcd4;     /* Vibrant Teal */
+            --tertiary: #1b006a;       /* Darkest Violet */
             --white: #ffffff;
-            --dark: #1f014b;            /* Dark text for contrast */
-            --text: #3c126d;            /* Lighter dark text */
+            --dark: #1f014b;          /* Dark text for contrast */
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.7);
+            
+            /* Background Colors */
+            --bg-gradient: linear-gradient(135deg, #100230 0%, #1b006a 100%);
+            --card-bg: rgba(255, 255, 255, 0.15); /* More visible card background */
+            --progress-card-bg: rgba(0, 0, 0, 0.3); /* Slightly darker progress card */
+            --border-color: rgba(255, 255, 255, 0.3);
 
             /* Sizing */
             --header-height: 90px;
+            --card-border-radius: 25px;
+            --main-container-width: 1300px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Original Surfer", sans-serif;
-            font-weight: 400;
-            font-style: normal;
+            font-family: "Nunito", sans-serif;
         }
 
         html {
@@ -44,8 +52,8 @@
         }
 
         body {
-            background-color: #f8fafc;
-            color: var(--text);
+            background: var(--bg-gradient);
+            color: var(--text-light);
             overflow-x: hidden;
             line-height: 1.6;
             position: relative;
@@ -53,8 +61,18 @@
 
         h1, h2, h3, h4 {
             font-family: "Original Surfer", sans-serif;
-            color: var(--dark);
+            color: var(--white);
             font-weight: 700;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent);
         }
 
         #particles-js {
@@ -64,14 +82,15 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, var(--tertiary) 0%, var(--primary) 100%);
         }
 
         /* ==========================================================================
-           2. HEADER & NAVIGATION (UPDATED)
+           2. HEADER & NAVIGATION
            ========================================================================== */
         header {
-            background-color: var(--primary); /* Updated to solid color */
+            background: rgba(27, 0, 106, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -87,35 +106,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: var(--main-container-width);
             margin: 0 auto;
             padding: 0 2rem;
             width: 100%;
         }
 
-        /* UPDATED: Logo styles for new design */
-        .logo {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-        
         .logo h1 {
             color: var(--white);
             font-size: 2.5rem;
             font-weight: 900;
             letter-spacing: 1px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
         }
         
+        .logo a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
         .logo span {
-            color: var(--accent-light);
+            color: var(--accent);
             margin-left: 4px;
         }
-        
+
         .logo-icon {
             font-size: 2.8rem;
             margin-right: 12px;
@@ -124,40 +141,35 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            transition: all 0.3s ease;
-        }
-        
-        header.scrolled .logo-icon {
-            color: var(--primary);
         }
 
-        /* UPDATED: Navigation links for cleaner look */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 2rem;
         }
         
         nav ul li a {
             color: var(--white);
-            text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             padding: 0.7rem 1.2rem;
             border-radius: 30px;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px; /* Gap for icons if they are re-added */
+            transition: all 0.3s ease;
         }
         
+        nav ul li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
         nav ul li a:hover {
+            color: var(--accent);
             background-color: rgba(255, 255, 255, 0.1);
         }
-        
 
         /* ==========================================================================
-           PROFILE PAGE STYLES
+           3. PROFILE PAGE STYLES (NEW GLASMORPHISM)
            ========================================================================== */
         .profile-page {
             padding-top: calc(var(--header-height) + 4rem);
@@ -167,26 +179,55 @@
         }
 
         .profile-container {
-            max-width: 1200px;
+            max-width: var(--main-container-width);
             margin: 0 auto;
             padding: 0 2rem;
         }
 
         .profile-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 1fr 2fr;
             gap: 2rem;
         }
 
         .profile-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--card-border-radius);
+            padding: 2.5rem; /* Increased padding */
+            backdrop-filter: blur(20px); /* Increased blur */
+            -webkit-backdrop-filter: blur(20px);
             color: var(--white);
             margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* Interactive Hover Effect */
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent); /* Change border color on hover */
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -200%;
+            left: -200%;
+            width: 400%;
+            height: 400%;
+            background: radial-gradient(circle at center, var(--primary-light) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .profile-card:hover::before {
+            opacity: 0.15;
+        }
+
 
         .card-header {
             display: flex;
@@ -194,31 +235,46 @@
             align-items: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Thicker border */
         }
 
         .card-header h3 {
             color: var(--white);
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Larger font size */
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
 
-        .add-link {
-            color: var(--primary-light);
-            text-decoration: none;
-            font-weight: 600;
+        .card-header h3 i {
+            font-size: 1.8rem; /* Larger icon size */
+            color: var(--secondary);
             transition: color 0.3s ease;
         }
-
-        .add-link:hover, .add-link-inline:hover {
+        
+        .profile-card:hover .card-header h3 i {
             color: var(--accent);
         }
 
+        .add-link, .edit-link {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 1rem; /* Larger link text */
+            transition: color 0.3s ease;
+        }
+
+        .add-link:hover, .edit-link:hover {
+            color: var(--accent);
+        }
+        
+        .edit-link i {
+            font-size: 1.2rem; /* Edit icon size */
+            color: var(--primary-light);
+        }
+
         .placeholder-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: 1.1rem; /* Larger placeholder text */
         }
 
         .profile-sidebar .user-info {
@@ -236,77 +292,112 @@
 
         .user-info h2 {
             color: var(--white);
-            font-size: 1.8rem;
+            font-size: 2rem; /* Larger username heading */
             margin-bottom: 0.25rem;
         }
 
         .user-info .username {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
+            font-size: 1.2rem; /* Larger username text */
         }
-
+        
         .info-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem; /* More spacing */
             color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem; /* Larger text */
         }
 
         .info-item i {
-            font-size: 1.2rem;
+            font-size: 1.4rem; /* Larger icons */
             color: var(--secondary);
         }
 
         .add-link-inline {
             color: var(--primary-light);
             text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .profile-main .profile-card:last-child {
-            margin-bottom: 0;
+            font-size: 1.1rem; /* Larger link text */
         }
 
         .progress-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+            background: var(--progress-card-bg);
+            border: 2px solid var(--border-color);
         }
-
+        
         .progress-content h4 {
             color: var(--white);
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Larger text */
             margin-bottom: 0.5rem;
         }
 
         .progress-content p {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
+            font-size: 1.1rem; /* Larger text */
         }
 
         .progress-circle {
             position: relative;
-            width: 60px;
-            height: 60px;
+            width: 80px; /* Larger progress circle */
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+            animation: pulse-glow 2s infinite ease-in-out;
         }
         
-        .progress-circle span { font-size: 1rem; font-weight: 700; color: var(--white); }
-        .progress-circle svg { position: absolute; top: 0; left: 0; }
-        .progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.2); stroke-width: 8; }
-        .progress-bar {
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 8;
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-            stroke-dasharray: 163.3;
-            stroke-dashoffset: 163.3;
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(0, 188, 212, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(0, 188, 212, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(0, 188, 212, 0.4); }
+        }
+
+        .progress-circle span { font-size: 1.4rem; font-weight: 700; color: var(--white); }
+        
+        /* Badges Card */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1.5rem; /* Increased gap */
+            margin-top: 1rem;
+        }
+
+        .badge-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem 1rem; /* Increased padding */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .badge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border-color: var(--accent);
+        }
+
+        .badge-card h3 {
+            font-size: 1.4rem; /* Larger badge title */
+            font-weight: 600;
+        }
+        
+        .badge-card p {
+            font-size: 1rem; /* Larger text */
+            color: var(--text-muted);
+        }
+        
+        .badge-card .ri-trophy-line {
+            font-size: 2.5rem; /* Larger icon */
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
         }
 
         /* --- Responsive Design --- */
@@ -317,6 +408,33 @@
             .profile-sidebar {
                 margin-bottom: 0;
             }
+            .profile-card {
+                padding: 1.5rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            .logo-icon {
+                font-size: 2.2rem;
+            }
+            nav ul {
+                gap: 1rem;
+            }
+            .profile-container {
+                padding: 0 1rem;
+            }
+            .profile-card h3 {
+                font-size: 1.2rem;
+            }
+            .progress-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .progress-circle {
+                margin-top: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -326,16 +444,16 @@
 
     <header>
         <div class="header-container">
-            <div class="logo">
-                    <i class="fas fa-graduation-cap logo-icon"></i>
-                    <h1>Hack<span>NRun</span></h1>
-            </div>
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <h1>Hack<span>NRun</span></h1>
+            </a>
             
             <nav id="main-nav">
                 <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="profile.html">My Profile</a></li>
-                    <li><a href="./leaderBoard.html" class="active">Leaderboard</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="profile.html" class="active">My Profile</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
                 </ul>
             </nav>
         </div>
@@ -345,9 +463,9 @@
         <div class="profile-container">
             <div class="profile-grid">
                 
-                <aside class="profile-sidebar">
+                <aside class="profile-sidebar" data-aos="fade-right">
                     <div class="profile-card user-info">
-                        <img src="" alt="User Avatar" class="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="User Avatar" class="profile-avatar">
                         <h2>HackNRun</h2>
                         <p class="username">@hacknrun</p>
                     </div>
@@ -355,6 +473,7 @@
                     <div class="profile-card">
                         <div class="card-header">
                             <h3><i class="ri-user-line"></i> Personal Information</h3>
+                            <a href="#" class="edit-link"><i class="ri-edit-line"></i></a>
                         </div>
                         <div class="card-body">
                             <div class="info-item">
@@ -373,17 +492,13 @@
                     </div>
                 </aside>
 
-                <section class="profile-main">
+                <section class="profile-main" data-aos="fade-left">
                     <div class="profile-card progress-card">
                         <div class="progress-content">
                             <h4>Complete your profile</h4>
                             <p>This data will be helpful to tailor your job applications.</p>
                         </div>
                         <div class="progress-circle">
-                            <svg width="60" height="60" viewBox="0 0 60 60">
-                                <circle class="progress-bg" cx="30" cy="30" r="26"></circle>
-                                <circle class="progress-bar" cx="30" cy="30" r="26"></circle>
-                            </svg>
                             <span>0%</span>
                         </div>
                     </div>
@@ -423,14 +538,17 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        if (document.getElementById('particles-js')) {
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({ duration: 800, once: true });
+
             particlesJS('particles-js', {
                 "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": false }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out" } },
                 "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } } },
                 "retina_detect": true
             });
-        }
+        });
     </script>
 </body>
 </html>
