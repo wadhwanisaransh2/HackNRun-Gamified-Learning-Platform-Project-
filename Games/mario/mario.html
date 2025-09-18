@@ -1,4 +1,4 @@
-A<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,11 +15,11 @@ A<!DOCTYPE html>
         .game-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 10px; /* MODIFIED */
+            padding: 0px; /* MODIFIED */
             box-shadow: 0 8px 32px rgba(0,0,0,1);
-            max-width: 1000px;
-            margin: 20px auto;
+            max-width: 900px; /* MODIFIED */
+            margin: 2px auto;
             position: relative;
         }
         .lives-counter {
@@ -27,7 +27,7 @@ A<!DOCTYPE html>
             justify-content: center;
             align-items: center;
             gap: 10px;
-            font-size: 1.5rem;
+            font-size: 1.35rem; /* MODIFIED */
             margin-bottom: 20px;
             background: rgba(0,0,0,0.3);
             padding: 10px;
@@ -35,14 +35,14 @@ A<!DOCTYPE html>
         }
         .star-icon {
             color: #f39c12;
-            font-size: 2rem;
+            font-size: 1.8rem; /* MODIFIED */
             animation: pulse 2s infinite;
         }
         .question-section {
             margin-bottom: 20px;
         }
         .question-text {
-            font-size: 1.5rem;
+            font-size: 1.35rem; /* MODIFIED */
             font-weight: bold;
             margin-bottom: 15px;
             background: linear-gradient(45deg, #ff6b6b, #feca57);
@@ -52,18 +52,18 @@ A<!DOCTYPE html>
         }
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); /* MODIFIED */
             gap: 15px;
             margin-bottom: 20px;
         }
         .option-btn {
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: #fff;
-            padding: 15px 20px;
+            padding: 13px 18px; /* MODIFIED */
             border: none;
-            border-radius: 12px;
+            border-radius: 10px; /* MODIFIED */
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem; /* MODIFIED */
             font-weight: 600;
             transition: all 0.3s ease;
             text-align: left;
@@ -75,8 +75,8 @@ A<!DOCTYPE html>
             transform: scale(1.05);
         }
         .message-area {
-            min-height: 50px;
-            font-size: 1.2rem;
+            min-height: 45px; /* MODIFIED */
+            font-size: 1.1rem; /* MODIFIED */
             font-weight: 600;
             margin-bottom: 20px;
         }
@@ -111,7 +111,7 @@ A<!DOCTYPE html>
             text-align: center;
         }
         .stat-icon {
-            font-size: 2rem;
+            font-size: 1.8rem; /* MODIFIED */
             margin-bottom: 5px;
         }
         @keyframes pulse {
@@ -122,21 +122,19 @@ A<!DOCTYPE html>
         .hidden { display: none; }
         @media (max-width: 768px) {
             .options-grid { grid-template-columns: 1fr; }
-            .game-container { padding: 20px; margin: 10px; }
-            .question-text { font-size: 1.2rem; }
+            .game-container { padding: 18px; margin: 10px; } /* MODIFIED */
+            .question-text { font-size: 1.1rem; } /* MODIFIED */
         }
     </style>
 </head>
 <body>
     <div class="container mx-auto px-4 py-8">
         <div class="game-container fade-in">
-            <h1 class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Stars MCQ Adventure</h1>
-            <p class="text-center text-lg mb-6">Climb to the stars by answering questions right! Wrong answers cost a life. Reach the top with your 3 lives intact!</p>
-            <div class="lives-counter">
+            <h1 class="text-3xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Stars MCQ Adventure</h1> <p class="text-center text-md mb-6">Climb to the stars by answering questions right! Wrong answers cost a life. Reach the top with your 3 lives intact!</p> <div class="lives-counter">
                 <span class="text-lg font-semibold">Lives Remaining:</span>
                 <span id="starCount" class="flex gap-2">★ ★ ★</span>
             </div>
-            <canvas id="gameCanvas" class="game-canvas mx-auto" width="500" height="300" style="border: 20px solid beige;"></canvas>
+            <canvas id="gameCanvas" class="game-canvas mx-auto" width="450" height="270" style="border: 18px solid beige;"></canvas>
             <div class="question-section">
                 <div class="question-text" id="questionDisplay">What wonders await in the stars? Answer to climb!</div>
                 <div class="options-grid" id="optionsContainer"></div>
@@ -216,33 +214,38 @@ A<!DOCTYPE html>
             { q: "What powers the Sun's energy?", options: ["Nuclear fission", "Chemical reaction", "Gravitational pull", "Nuclear fusion"], a: 3 }
         ];
 
+        // MODIFIED: All drawing logic values reduced by ~10%
         function drawStairs(jumpOffsetY = 0, stairNumOverride = null) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, '#0c0c0c');
-    gradient.addColorStop(1, '#1a1a2e');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const stairWidth = 80;
-    const stairSpacing = 15;
-    const totalWidth = stairWidth + (maxStairs - 1) * stairSpacing;
-    const startX = (canvas.width - totalWidth) / 2;
-    for (let i = 0; i < maxStairs; i++) {
-        const y = canvas.height - (i * 18) - 50;
-        const x = startX + i * stairSpacing;
-        ctx.fillStyle = i < currentStair ? (i % 2 === 0 ? '#f39c12' : '#e74c3c') : '#34495e';
-        ctx.shadowBlur = i < currentStair ? 10 : 0;
-        ctx.shadowColor = ctx.fillStyle;
-        ctx.fillRect(x, y, stairWidth, 15);
-        ctx.strokeStyle = '#ecf0f1';
-        ctx.strokeRect(x, y, stairWidth, 15);
-        ctx.shadowBlur = 0;
-    }
-    let stairNum = stairNumOverride !== null ? stairNumOverride : currentStair;
-    let playerX = startX + stairNum * stairSpacing + stairWidth / 2;
-    let playerY = canvas.height - stairNum * 18 - 70 - jumpOffsetY;
-    ctx.drawImage(playerImg, playerX - 12, playerY - 12, 24, 24);
-}
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#0c0c0c');
+            gradient.addColorStop(1, '#1a1a2e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const stairWidth = 72;
+            const stairSpacing = 13;
+            const stairHeight = 16;
+            const totalWidth = stairWidth + (maxStairs - 1) * stairSpacing;
+            const startX = (canvas.width - totalWidth) / 2;
+            
+            for (let i = 0; i < maxStairs; i++) {
+                const y = canvas.height - (i * stairHeight) - 45;
+                const x = startX + i * stairSpacing;
+                ctx.fillStyle = i < currentStair ? (i % 2 === 0 ? '#f39c12' : '#e74c3c') : '#34495e';
+                ctx.shadowBlur = i < currentStair ? 10 : 0;
+                ctx.shadowColor = ctx.fillStyle;
+                ctx.fillRect(x, y, stairWidth, 13);
+                ctx.strokeStyle = '#ecf0f1';
+                ctx.strokeRect(x, y, stairWidth, 13);
+                ctx.shadowBlur = 0;
+            }
+            
+            let stairNum = stairNumOverride !== null ? stairNumOverride : currentStair;
+            let playerX = startX + stairNum * stairSpacing + stairWidth / 2;
+            let playerY = canvas.height - stairNum * stairHeight - 63 - jumpOffsetY;
+            ctx.drawImage(playerImg, playerX - 11, playerY - 11, 22, 22);
+        }
+
         function triggerJump() {
             isJumping = true;
             jumpStart = null;
@@ -253,10 +256,12 @@ A<!DOCTYPE html>
                 if (!jumpStart) jumpStart = ts;
                 let progress = (ts - jumpStart) / jumpDuration;
                 if (progress > 1) progress = 1;
+                
                 // Arc motion
-                let arcY = Math.sin(Math.PI * progress) * 28; // vertical
+                let arcY = Math.sin(Math.PI * progress) * 25; // MODIFIED jump height
                 let stairProgress = jumpFrom + (jumpTo - jumpFrom) * progress;
                 drawStairs(arcY, stairProgress);
+                
                 if (progress < 1) {
                     requestAnimationFrame(animateJump);
                 } else {
